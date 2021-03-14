@@ -8,6 +8,10 @@ const img = (req,res) =>{
 const  uploadImg = (req,res)=>{
     console.log('mira una imagen') 
     console.log(req.file);
+    res.json({
+        message:"sirvio"
+
+    })
     
  }
 

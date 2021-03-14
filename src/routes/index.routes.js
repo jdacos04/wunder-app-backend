@@ -6,6 +6,29 @@ const {uploadImg,img} =require('../controllers/image.contoller')
 
 
 router.get('/',renderIndex,img)
+//si ya iniciamso seccion 
+
+
+
+
+//si no emos iniicaod seccion 
+
+
+
+
+//formulario de login 
+
+
+
+
+
+
+
+
+
+// el login como tal 
+
+
 
 router.post('/',uploadImg);
 
