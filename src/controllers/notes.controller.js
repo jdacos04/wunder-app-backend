@@ -1,6 +1,31 @@
-const passport = require('passport');
 const { Pool } = require('pg');
 const pool = require('../database');
+
+
+const createNote = async(req,res)=>{
+
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -55,3 +80,4 @@ module.exports = {
     updateUser,
     deleteUser
 };
+
