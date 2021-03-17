@@ -32,7 +32,7 @@ const createNotes = ({notetitel,notetext,notecheck,notepriority,notedate,notetim
 
 
 const deleteNotesbyID = ({notetitel,notetext,notecheck,notepriority,notedate,notetimeleft,emailuser})=>{
-     
+     //hola
     return new Promise ((resolve,reject)=>{
         pool.query('DELETE FROM textnotes WHERE textnoteid = $1',[id],(err,
         result)=>{
