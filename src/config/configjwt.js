@@ -3,7 +3,7 @@ const moment = require ('moment');
 
 
 const checkToken = (req,res,next)=>{
-    if (!req.headers['user_token'])
+    if (!req.headers[user_token])
     return res.json({
         erroe:' You mist include the header'
     });
@@ -20,6 +20,7 @@ const checkToken = (req,res,next)=>{
         return res.json({error:'Expire token'})
     }
     req.userId=payload.userId
+
     next();
 }
 
