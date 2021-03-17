@@ -10,9 +10,9 @@ router.post('/register', async (req,res)=>{
     console.log(req.body);
     req.body.password=bycrypt.hashSync(req.body.password,10);
     const result = await Users.insert(req.body);
-    res.json(result)
-    res.json({status:"1"})
     console.log('si va para el baile')
+    res.json({status:"1"})
+    
 })
 const createToken = (user) =>{
     let payload ={
