@@ -4,24 +4,11 @@ const pool = require('../database');
 
 const createNote = async(req,res)=>{
 
+
+}
+const deleteNote= async(req,res)=>{
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
