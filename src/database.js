@@ -9,7 +9,7 @@ const pool =new postgres.Pool({
     port: '5432',
     ssl: true
 });
-
+pool.connect();
 // const pool =new postgres.Pool({
 
 //     user: 'postgres',
