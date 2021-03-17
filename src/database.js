@@ -7,9 +7,9 @@ const pool =new postgres.Pool({
     password: 'e7f64f04345c22796d857a79cc6a17d66055e89bdce80df6d52128cebcd9d461',
     database: 'd2sbrm1clg819l',
     port: '5432',
-    ssl: true
+    
 });
-pool.connect();
+
 // const pool =new postgres.Pool({
 
 //     user: 'postgres',
