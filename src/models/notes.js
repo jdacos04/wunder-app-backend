@@ -15,10 +15,11 @@ const getAllNOtes = ({usres_id})=>{
 
 //creacion de notas
 
-const createNotes = ({notetitel,notetext,notecheck,notepriority,notedate,notetimeleft,users_id})=>{
-    
+const createNotes = ({notetitle,notetext,notecheck,notepriority,notedate,notetimeleft})=>{
+    var users_id = req.userid
+    console.log(users_id)
     return new Promise ((resolve,reject)=>{
-        pool.query('INSER INTO textnote(notetitel,notetext,notecheck,notepriority,notedate,notetimeleft,usersid) VALUES($1,$2,$3,$4,$5,$6,$7)',[notetitel,notetext,notecheck,notepriority,notedate,notetimeleft,users_id],(err,
+        pool.query('INSERT INTO textnotes(notetitle,notetext,notecheck,notepriority,notedate,notetimeleft,usersid) VALUES($1,$2,$3,$4,$5,$6,$7)',[notetitle,notetext,notecheck,notepriority,notedate,notetimeleft,users_id],(err,
         result)=>{
             if(err)reject(err)
             if(result){
@@ -32,9 +33,9 @@ const createNotes = ({notetitel,notetext,notecheck,notepriority,notedate,notetim
 
 
 const deleteNotesbyID = ({notetitel,notetext,notecheck,notepriority,notedate,notetimeleft,emailuser})=>{
-     //hola
+    const id=req.usersid
     return new Promise ((resolve,reject)=>{
-        pool.query('DELETE FROM textnotes WHERE textnoteid = $1',[id],(err,
+        pool.query('DELETE FROM textnotes WHERE usersid = $1',[textnotesid],(err,
         result)=>{
             if(err)reject(err)
             if(result){
@@ -47,7 +48,7 @@ const deleteNotesbyID = ({notetitel,notetext,notecheck,notepriority,notedate,not
 
 
 
-const updateNoteById  = ({notetitel,notetext,notecheck,notepriority,notedate,notetimeleft})=>{
+const updateNoteById  = ({id,notetitel,notetext,notecheck,notepriority,notedate,notetimeleft})=>{
     
     return new Promise ((resolve,reject)=>{
         pool.query(' UPDATE  textnotes SET notetitel = $2, notetext =$3,notecheck=$4,notepriority=$5,notedate=$6,notetimeleft=$7, WHERE textnoteid = $1',[id,notetitel,notetext,notecheck,notepriority,notedate,notetimeleft,emailuser],(err,
@@ -62,4 +63,4 @@ const updateNoteById  = ({notetitel,notetext,notecheck,notepriority,notedate,not
 
 
 
-module.exports = { createNotes};
+module.exports = { createNotes,updateNoteById,deleteNotesbyID,getAllNOtes};

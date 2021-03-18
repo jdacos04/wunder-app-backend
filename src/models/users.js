@@ -25,7 +25,7 @@ const insert =({email,password,name,username})=>{
 
 const getByEmail =(pEmail)=>{
     return new Promise((resolve,reject)=>{
-        pool.query('SELECT * FROM users WHERE email =$1',[pEmail],(err,rows)=>{
+        pool.query('SELECT * FROM users WHERE email = $1',[pEmail],(err,rows)=>{
             if (err) reject(err)
             resolve(rows.rows[0])
         });

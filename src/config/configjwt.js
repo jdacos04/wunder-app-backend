@@ -1,30 +1,25 @@
-const jwt = require ('jwt-simple');
-const moment = require ('moment');
-
-
-const checkToken = (req,res,next)=>{
-    if (!req.headers[user_token])
-    return res.json({
-        erroe:' You mist include the header'
-    });
-    const token =req.headers[user_token];
-    let payload =null
-    try{
-        payload= jwt.decode(token,Token_Autn)
-    }catch(err){
-        return res.json({
-            error:'invalid token'
-        });
-    }
-    if (moment().unix()>payload.expiresAT){
-        return res.json({error:'Expire token'})
-    }
-    req.userId=payload.userId
-
-    next();
-}
-
-
-module.exports= {
-    checkToken
-}
+// routes.post('/login',async(req,res)=>{
+//     const user = await Users.getByEmail(req.body.email)
+   
+//        if(user === undefined){
+//            res.json({
+//                error:"ERROR, email or password not found"
+//            })
+//        }else{
+//            const equals = bycrypt.compareSync(req.body.password, user.password);
+//            if(!equals){
+//                res.json({
+//                    error:"ERROR, email or password not found  2"
+//                })
+//            }else{
+                   
+//                const token = jwt.sign({user:userid},'eltermo',{
+//                    expiresIn:60*60
+//                })
+               
+//                res.json({auth:true,token:token})
+               
+               
+//            }
+//        }
+//    })

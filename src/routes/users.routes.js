@@ -1,12 +1,23 @@
 const {Router} = require('express');
-const router = Router();
+const routes = Router();
 const Users=require('../models/users');
 const bycrypt =require('bcryptjs');
-const jwt =require('jwt-simple');
-const moment = require('moment');
-const configjwt= require('../config/configjwt')
+const jsonwebtoken = require('jsonwebtoken');
+const {verifyToken,refreshToken}=require('../config/auth')
 
-router.post('/register', async (req,res)=>{
+
+
+
+// const getIdByemail =(idByEmail)=>{
+//     return new Promise((resolve,reject) =>{
+//         pool.query('SELECT * FROM users WERHE email =$1',[idByEmail], (err,rows)=>{
+//             if(err)reject(err)
+//             resolve(rows)
+//         });
+//     });
+// } 
+
+routes.post('/register', async (req,res)=>{
     let termo =[]
     const verificationEmail = await Users.getByEmail (req.body.email) 
     const pass= req.body.password
@@ -30,23 +41,63 @@ router.post('/register', async (req,res)=>{
     console.log('hola')
     res.status(500).send({error:"ERROR, este correo ya esta registrado"})
     }
-
 })
-const createToken = (user) =>{
-    console.log('hola')
-    let payload ={
-        userId: user.id,
-        createdAT:moment().unix(),
-        expiresAt:moment().add(1,'day').unix()
 
-    }
-    console.log(jwt.encode(payload,'Token-Auth'))
-    return jwt.encode(payload,'Token-Auth')
-}
-
-router.post('/login',async(req,res)=>{
-
+routes.post('/login',async(req,res)=>{
     const user = await Users.getByEmail(req.body.email)
+
+        if(user === undefined){
+            res.json({
+                error:"ERROR, email or password not found"
+            })
+        }else{
+            console.log(user)
+            const equals = bycrypt.compareSync(req.body.password, user.password);
+            if(!equals){
+                res.json({
+                    error:"ERROR, email or password not found  2"
+                })
+            }else{
+               const token = jsonwebtoken.sign({id:user.usersid},'eltermo',{
+                    expiresIn:60*60
+                })
+
+                res.json({auth:true,token:token})
+                
+            }
+                    
+
+
+    
+    }
+});
+routes.get('/me',verifyToken,(req,res, next)=>{
+console.log(req.body);
+res.json({message:"ya esta el meep"})
+
+ 
+})
+
+
+
+
+
+
+
+// const createToken = (user) =>{
+//     console.log('hola')
+//     let payload ={
+//         userId: user.id,
+//         createdAT:moment().unix(),
+//         expiresAt:moment().add(1,'day').unix()
+
+//     }
+//     console.log(jwt.encode(payload,'Token-Auth'))
+//     return jwt.encode(payload,'Token-Auth')
+// }
+
+routes.post('/login',async(req,res)=>{
+ const user = await Users.getByEmail(req.body.email)
 
     if(user === undefined){
         res.json({
@@ -60,29 +111,26 @@ router.post('/login',async(req,res)=>{
             })
         }else{
                 
-            res.json({
-                successful:createToken(user),
-                done :"Login corret",
-                user_id:user.usersid
-            });
-            console.log(res.json)
+            const token = jwt.sign({user:userid},'eltermo',{
+                expiresIn:60*60
+            })
+            
+            res.json({auth:true,token:token})
+            
+            
         }
     }
 })
 
-router.use(configjwt.checkToken);
+// router.use(configjwt.checkToken);
 
+// router.get('/mainUser',(req,res)=>{
+//     Users.getById(req.userId)
+//     .then(rows=>{
+//         res.json(rows);
+//     })
+//     .catch(err=>console.log(err));
+// })
+// router.post('/token',checkToken)
 
- 
-
-router.get('/mainUser',(req,res)=>{
-    Users.getById(req.userId)
-    .then(rows=>{
-        res.json(rows);
-    })
-    .catch(err=>console.log(err));
-})
-
-
-
-module.exports= router;
+module.exports= routes;
